@@ -1,0 +1,16 @@
+{
+  "name": "bot-epsi",
+  "version": "0.1.0",
+  "description": "Bot pour le discord Epsi",
+  "main": "app/Main_Epsi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrien R",
+  "license": "MIT",
+  "dependencies": {
+    "compile-run": "^2.1.2",
+    "discord.js": "^11.4.2",
+    "ping": "^0.2.2"
+  }
+}
