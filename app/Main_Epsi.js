@@ -23,21 +23,7 @@ client.on("ready", () => {
 
   client.user.setActivity(`"/e ?" pour l'aide`); //met a jour le "playing whit"
 
-  //#region envoie automatique
-  //https://www.npmjs.com/package/node-schedule
-  /*var j = schedule.scheduleJob('0 55 7 * * *', function () {
-    client.channels.get("387249474625601537").send('euhhh oui, Bonjour, bonne chournéé');
-  });
-  var k = schedule.scheduleJob('0 45 21 * * *', function () {
-    client.channels.get("387249474625601537").send('euhhh oui, Bonne nuit, demain caféé douceur');
-  });
-  var l = schedule.scheduleJob('* 15 8 * * 3', function () {
-    client.channels.get("387249474625601537").send("", {
-      file: "./app/media/wednesday.jpg" // 
-    });
-  });*/
-
-  //#endregion
+  //client.user.setAvatar('app/epsi.jpg');
 });
 
 client.on("message", async message => {
