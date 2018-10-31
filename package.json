@@ -1,6 +1,6 @@
 {
   "name": "bot-epsi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bot pour le discord Epsi",
   "main": "app/Main_Epsi.js",
   "scripts": {

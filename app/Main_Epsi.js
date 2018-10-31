@@ -8,13 +8,13 @@ const {
   python,
   java
 } = require('compile-run');
+const fs = require('fs');
 //const schedule = require('node-schedule');
 
 //Files
 const config = require("./config.json");
 const JsonPackage = require('.././package.json');
-
-//variables
+const JsonStats = require('./Stats.json');
 
 //creation du client discord
 const client = new Discord.Client();
@@ -23,16 +23,43 @@ client.on("ready", () => {
 
   client.user.setActivity(`"/e ?" pour l'aide`); //met a jour le "playing whit"
 
-  //client.user.setAvatar('app/epsi.jpg');
+  //client.user.setAvatar('app/epsi.jpg'); //to set the avatar in cas of an error
+
+  client.users.forEach(user => {
+    if(user instanceof Discord.User) console.log("["+user+"] "+user.username);
+  });
+  
+
+ /* fs.writeFile("Stats.json", "Hey there!", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+}); */
+
+  /*
+  setInterval (function (){
+    var u, user;
+    for(u in client.users){
+       user = client.users[u];
+       if(user instanceof Discord.User) console.log("["+u+"] "+user.username);
+    }
+}, 10000);
+  */
 });
 
 client.on("message", async message => {
-
 
   if (!message.author.bot) {
     console.log("⚪ Message recu : " + message.content + " | from : " + message.member.displayName + " | channel : " + message.channel.name);
   }
 
+  //Troll frederique
+  if (message.author == client.users.get('246365469148315668')){
+    message.react(message.guild.emojis.find(x => x.name === "shots"));
+  }
+
+  //si le bot est mentioner
   if (message.isMentioned(client.users.get('494472750824685568'))) {
     await message.reply("Bonjour , je peut t'aider ? si oui ecrit \"/e ?\" pour plus d'info ! :smiley:");
   }
