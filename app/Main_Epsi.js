@@ -54,7 +54,7 @@ client.on("message", async message => {
     console.log("⚪ Message recu : " + message.content + " | from : " + message.member.displayName + " | channel : " + message.channel.name);
   }
 
-  //Troll frederique
+  //Troll frederic
   if (message.author == client.users.get('246365469148315668')){
     message.react(message.guild.emojis.find(x => x.name === "shots"));
   }
