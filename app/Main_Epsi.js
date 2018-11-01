@@ -61,7 +61,7 @@ client.on("message", async message => {
 
   //si le bot est mentioner
   if (message.isMentioned(client.users.get('494472750824685568'))) {
-    await message.reply("Bonjour , je peut t'aider ? si oui ecrit \"/e ?\" pour plus d'info ! :smiley:");
+    await message.reply("Bonjour , je peux t'aider ? Si oui écris \"/e ?\" pour plus d'info ! :smiley:");
   }
 
   if (message.author.bot) return; //si le message est vide
@@ -77,10 +77,10 @@ client.on("message", async message => {
     await message.channel.send(`
     ----- Commandes -----
     :warning: EN CONSTRUCTION :warning:
-    Toute les commandes doivent etre prifixé par "/e"
-    Les commandes disponible sont: 
-     - ping [adresse] : renvois si l'adress est disponible ou non 
-     - compile [c/cpp/node/python/java] [code] : compile et retourne le resultat
+    Toute les commandes doivent etre préfixées par "/e"
+    Les commandes disponibles sont: 
+     - ping [adresse] : renvoit si l'adresse est disponible ou non 
+     - compile [c/cpp/node/python/java] [code] : compile et retourne le résultat
      - about : Informations diverses
     `);
   }
@@ -98,13 +98,13 @@ client.on("message", async message => {
         msg.edit(Retour);
       });
     } else {
-      await message.channel.send(":warning: adresse non definie");
+      await message.channel.send(":warning: adresse non définie !");
     }
 
   }
 
   if (command === "compile") {
-    await message.channel.send(":warning: Commande en cours de creation");
+    await message.channel.send(":warning: Commande en cours de création !");
     /*
     if (!["c", "cpp", "node", "python", "java"].includes(args[0].toLowerCase())) {
       await message.channel.send(":warning: type de code non suporté");
@@ -153,7 +153,7 @@ client.on("message", async message => {
       Heure server : ${nowtime}
       Latence Connection : ${m.createdTimestamp - message.createdTimestamp}ms
       Latence API : ${Math.round(client.ping)}ms
-      Je suis Open Source : <https://github.com/Mrgove10/Discord_Bot_Epsi> ! Toutes modifications sont accepté !
+      Je suis Open Source : <https://github.com/Mrgove10/Discord_Bot_Epsi> ! Toutes modifications sont acceptées !
       Coded in Node.Js, Libraries used = ["discord.js","ping","compile-run"].
       `)
   }
