@@ -147,7 +147,7 @@ client.on("message", async message => {
     var m = await message.channel.send("Chargement..."); //envoie du message
     //Mofification du message
     m.edit(`
-      ----- Epsiot v${version} -----
+      ----- Epsibot v${version} -----
       Bot : Adrien
       Temps depuis le dernier démarrage : ${uptime}
       Heure server : ${nowtime}
