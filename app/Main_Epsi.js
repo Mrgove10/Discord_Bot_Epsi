@@ -55,9 +55,10 @@ client.on("message", async message => {
   }
 
   //Troll frederic
+  /*
   if (message.author == client.users.get('246365469148315668')){
     message.react(message.guild.emojis.find(x => x.name === "shots"));
-  }
+  }*/
 
   //si le bot est mentioner
   if (message.isMentioned(client.users.get('494472750824685568'))) {
