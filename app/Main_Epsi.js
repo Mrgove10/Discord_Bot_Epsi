@@ -1,23 +1,23 @@
 //Packets
 const Discord = require("discord.js");
 const ping = require('ping');
-const {
-  c,
-  cpp,
-  node,
-  python,
-  java
-} = require('compile-run');
 const fs = require('fs');
-//const schedule = require('node-schedule');
+const schedule = require('node-schedule');
 
 //Files
 const config = require("./config.json");
 const JsonPackage = require('.././package.json');
-const JsonStats = require('./Stats.json');
 
 //creation du client discord
 const client = new Discord.Client();
+
+//consts
+const CAT_API_URL   = "https://api.thecatapi.com/"
+const CAT_API_KEY   = "8e150203-b8a6-4835-8a1e-e3d9c4438f91"; 
+
+/**
+ * When the bot is ready
+ */
 client.on("ready", () => {
   console.log(`💚 Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
 
@@ -26,39 +26,18 @@ client.on("ready", () => {
   //client.user.setAvatar('app/epsi.jpg'); //to set the avatar in cas of an error
 
   client.users.forEach(user => {
-    if(user instanceof Discord.User) console.log("["+user+"] "+user.username);
+    if (user instanceof Discord.User) console.log("[" + user + "] " + user.username);
   });
-  
-
- /* fs.writeFile("Stats.json", "Hey there!", function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-}); */
-
-  /*
-  setInterval (function (){
-    var u, user;
-    for(u in client.users){
-       user = client.users[u];
-       if(user instanceof Discord.User) console.log("["+u+"] "+user.username);
-    }
-}, 10000);
-  */
 });
 
+/**
+ * On every message recieved by the bot
+ */
 client.on("message", async message => {
 
   if (!message.author.bot) {
     console.log("⚪ Message recu : " + message.content + " | from : " + message.member.displayName + " | channel : " + message.channel.name);
   }
-
-  //Troll frederic
-  /*
-  if (message.author == client.users.get('246365469148315668')){
-    message.react(message.guild.emojis.find(x => x.name === "shots"));
-  }*/
 
   //si le bot est mentioner
   if (message.isMentioned(client.users.get('494472750824685568'))) {
@@ -73,7 +52,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
 
-  
+
   if (command === "help" || command === "?" || command === "aide") {
     await message.channel.send(`
     ----- Commandes -----
@@ -101,37 +80,6 @@ client.on("message", async message => {
     } else {
       await message.channel.send(":warning: adresse non définie !");
     }
-
-  }
-
-  if (command === "compile") {
-    await message.channel.send(":warning: Commande en cours de création !");
-    /*
-    if (!["c", "cpp", "node", "python", "java"].includes(args[0].toLowerCase())) {
-      await message.channel.send(":warning: type de code non suporté");
-    } else {
-      var msg = await message.channel.send(":thumbsup: Compilation en cours...");
-      var CS = ""; //CS = CompileSctring
-      for (let index = 1; index < 9999; index++) {
-        if (args[index] != null) {
-          if (index != 1) {
-            CS += " " + args[index];
-          } else {
-            CS += args[index];
-          }
-        }
-      }
-      console.log("BC");
-
-    
-      var ReturnString = compile(args[0].toLowerCase(), CS);
-      console.log("AC");
-      console.log(ReturnString);
-     //  console.log(compile(args[0].toLowerCase(), CS));
-      await msg.edit("```" + ReturnString + "```");
-    }
-*/
-
   }
 
   if (command === "epsi") {
@@ -162,7 +110,10 @@ client.on("message", async message => {
 
 client.login(config.token);
 
-//random
+/**
+ * Gets a random int between 0 and max
+ * @param {*} max 
+ */
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -191,58 +142,31 @@ String.prototype.toHHMMSS = function () {
   return time;
 }
 
-//compiler
-function compile(TypeCode, CodeString) {
-  const sourcecode = CodeString;
-  const typecode = TypeCode;
-
-
-  if (typecode == 'c') {
-    let resultPromise = c.runSource(sourcecode);
-    resultPromise
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        return err;
-      });
-  } else if (typecode == 'cpp') {
-    let resultPromise = cpp.runSource(sourcecode);
-    resultPromise
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        return err;
-      });
-  } else if (typecode == 'node') {
-    let resultPromise = node.runSource(sourcecode);
-    resultPromise
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        return err;
-      });
-  } else if (typecode == 'python') {
-    let resultPromise = python.runSource(sourcecode);
-    resultPromise
-      .then(result => {
-        console.log(result);
-        return result;
-        // return result["stdout"];
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  } else if (typecode == 'java') {
-    let resultPromise = java.runSource(sourcecode);
-    resultPromise
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        return err;
-      });
+/**
+ * Makes a request to theDogAPI.com for a random dog image with breed info attached.
+ */
+async function loadImage(sub_id) {
+  // you need an API key to get access to all the iamges, or see the requests you've made in the stats for your account
+  var headers = {
+    'X-API-KEY': CAT_API_KEY,
   }
+  var query_params = {
+    'has_breeds': true, // we only want images with at least one breed data object - name, temperament etc
+    'mime_types': 'jpg,png', // we only want static images as Discord doesn't like gifs
+    'size': 'small',   // get the small images as the size is prefect for Discord's 390x256 limit
+    'sub_id': sub_id, // pass the message senders username so you can see how many images each user has asked for in the stats
+    'limit': 1       // only need one
+  }
+  // convert this obejc to query string 
+  let queryString = querystring.stringify(query_params);
+
+  try {
+    // construct the API Get request url
+    let _url = CAT_API_URL + `v1/images/search?${queryString}`;
+    // make the request passing the url, and headers object which contains the API_KEY
+    var response = await r2.get(_url, { headers }).json
+  } catch (e) {
+    console.log(e)
+  }
+  return response;
 }
